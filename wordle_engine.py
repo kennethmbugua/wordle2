@@ -109,18 +109,15 @@ def update_letter_status(letter_status, target, guess):
     target_dict = {}
     for x, y in enumerate(target_list):
         target_dict[y] = x
-
     for i in range(5):
         a=guess_list[i]
-        if a in target_dict.keys():
-            if guess_list.index(a) == target_dict[a]:
-                letter_status.update({a: wordle_colors.GREEN})
-
-            else:
-                letter_status.update({a: wordle_colors.YELLOW})
-
+        if guess_list[i] == target_list[i]:
+            letter_status.update({a: wordle_colors.GREEN})
+        elif guess_list[i] in target_dict.keys(): #and guess_list.index(a) != target_dict[a]:
+            letter_status.update({a: wordle_colors.YELLOW})
         else:
             letter_status.update({a: wordle_colors.RED})
+
 
     return letter_status
 
