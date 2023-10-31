@@ -74,16 +74,14 @@ def format_guess(target, guess):
     guess_list=list(guess)
     target_list=list(target)
     target_dict={}
-    for x,y in enumerate(target_list):
-        target_dict[y]=x
-
     dict_n=""
     for i in range(5):
         a=guess_list[i]
+
         if guess_list[i] == target_list[i]:
             a = f"{wordle_colors.GREEN}{guess_list[i]}"
             dict_n = dict_n + a
-        elif guess_list[i] in target_dict.keys() or guess_list.index(a)!=target_dict[a]:
+        elif guess_list[i] in target_list:
             a = f"{wordle_colors.YELLOW}{guess_list[i]}"
             dict_n = dict_n + a
         else:
@@ -104,19 +102,20 @@ def update_letter_status(letter_status, target, guess):
                   (but not in the correct location)
         * RED:    Letter does  not appear in the target word, but has
                   been used in at least one guess."""
+
+
     guess_list = list(guess)
     target_list = list(target)
-    target_dict = {}
-    for x, y in enumerate(target_list):
-        target_dict[y] = x
     for i in range(5):
         a=guess_list[i]
+        if letter_status.get(a) == wordle_colors.GREEN:
+            continue
         if guess_list[i] == target_list[i]:
-            letter_status.update({a: wordle_colors.GREEN})
-        elif guess_list[i] in target_dict.keys() and guess_list.index(a) != target_dict[a]:
-            letter_status.update({a: wordle_colors.YELLOW})
-    else:
-        letter_status.update({a: wordle_colors.RED})
+            letter_status.update({a:wordle_colors.GREEN})
+        elif a in target_list:
+            letter_status[a]=wordle_colors.YELLOW
+        else:
+            letter_status[a]=wordle_colors.RED
 
 
     return letter_status
