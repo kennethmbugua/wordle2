@@ -83,7 +83,7 @@ def format_guess(target, guess):
         if guess_list[i] == target_list[i]:
             a = f"{wordle_colors.GREEN}{guess_list[i]}"
             dict_n = dict_n + a
-        elif guess_list[i] in target_dict.keys() and guess_list.index(a)!=target_dict[a]:
+        elif guess_list[i] in target_dict.keys() or guess_list.index(a)!=target_dict[a]:
             a = f"{wordle_colors.YELLOW}{guess_list[i]}"
             dict_n = dict_n + a
         else:
@@ -115,8 +115,8 @@ def update_letter_status(letter_status, target, guess):
             letter_status.update({a: wordle_colors.GREEN})
         elif guess_list[i] in target_dict.keys() and guess_list.index(a) != target_dict[a]:
             letter_status.update({a: wordle_colors.YELLOW})
-        else:
-            letter_status.update({a: wordle_colors.RED})
+    else:
+        letter_status.update({a: wordle_colors.RED})
 
 
     return letter_status
